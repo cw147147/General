@@ -30,7 +30,7 @@ Required production values:
 | `TWILIO_ACCOUNT_SID` | Twilio account SID |
 | `TWILIO_AUTH_TOKEN` | Twilio auth token |
 | `TWILIO_WHATSAPP_FROM` | Twilio WhatsApp sender, for example `+14155238886` |
-| `WHATSAPP_TO` | Recipient WhatsApp number |
+| `WHATSAPP_TO` | Recipient WhatsApp number. Set this in `.env` or deployment secrets, not in git. |
 
 Important defaults:
 
@@ -45,6 +45,8 @@ Important defaults:
 
 Set `WORLD_CUP_DIGEST_TIMEZONE` if 10am should be interpreted in another timezone.
 
+For a specific recipient, set `WHATSAPP_TO` to that WhatsApp number in your private `.env` file or deployment secret. Numbers may include or omit Twilio's `whatsapp:` prefix.
+
 ## Run once
 
 From the repository root:
@@ -53,13 +55,13 @@ From the repository root:
 set -a
 . ./.env
 set +a
-PYTHONPATH=src python -m world_cup_whatsapp_agent run-once
+PYTHONPATH=src python3 -m world_cup_whatsapp_agent run-once
 ```
 
 Use dry-run mode to print the WhatsApp body instead of sending it:
 
 ```bash
-PYTHONPATH=src python -m world_cup_whatsapp_agent run-once --dry-run
+PYTHONPATH=src python3 -m world_cup_whatsapp_agent run-once --dry-run
 ```
 
 ## Schedule daily at 10am
@@ -70,7 +72,7 @@ PYTHONPATH=src python -m world_cup_whatsapp_agent run-once --dry-run
 set -a
 . ./.env
 set +a
-PYTHONPATH=src python -m world_cup_whatsapp_agent schedule
+PYTHONPATH=src python3 -m world_cup_whatsapp_agent schedule
 ```
 
 This process calculates the next configured 10:00 run in `WORLD_CUP_DIGEST_TIMEZONE`, sleeps until then, sends the digest, and repeats daily.
@@ -80,7 +82,7 @@ This process calculates the next configured 10:00 run in `WORLD_CUP_DIGEST_TIMEZ
 For a host already running in the desired timezone:
 
 ```cron
-0 10 * * * cd /path/to/repo && set -a && . ./.env && set +a && PYTHONPATH=src python -m world_cup_whatsapp_agent run-once
+0 10 * * * cd /path/to/repo && set -a && . ./.env && set +a && PYTHONPATH=src python3 -m world_cup_whatsapp_agent run-once
 ```
 
 If the host timezone differs, either set the host cron timezone or use the resident scheduler.
