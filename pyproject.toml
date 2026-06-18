@@ -1,0 +1,6 @@
+[project]
+name = "world-cup-whatsapp-agent"
+version = "0.1.0"
+description = "Daily WhatsApp digest for FIFA Men's World Cup 2026 results, standings, and news."
+requires-python = ">=3.11"
+dependencies = []
