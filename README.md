@@ -88,5 +88,5 @@ If the host timezone differs, either set the host cron timezone or use the resid
 ## Tests
 
 ```bash
-PYTHONPATH=src python -m unittest
+PYTHONPATH=src python3 -m unittest discover -s tests
 ```
